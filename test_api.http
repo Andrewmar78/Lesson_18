@@ -13,7 +13,7 @@ Content-Type: application/json
 
 {
   "id": 1,
-  "user": "MUDAK",
+  "user": "Thomas",
   "rating": 5,
   "book_id": 1
 }
@@ -24,7 +24,7 @@ POST http://localhost:10001/reviews/
 Content-Type: application/json
 
 {
-  "user": "MUDAK",
+  "user": "Thomas",
   "rating": 15,
   "book_id": 133
 }
