@@ -65,7 +65,5 @@ class MovieView(Resource):
         return "", 204
 
     def delete(self, mid):
-        req_json = request.json
-        req_json["id"] = mid
-        movie_service.delete(req_json)
+        movie_service.delete(mid)
         return "", 204
