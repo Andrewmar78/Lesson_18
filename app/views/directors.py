@@ -9,7 +9,7 @@ director_schema = DirectorSchema()
 
 
 @director_ns.route('/')
-class DirectorView(Resource):
+class DirectorsView(Resource):
     """Вьюшка вывода всех режиссеров по ID"""
     def get(self):
         all_directors = director_service.get_all()

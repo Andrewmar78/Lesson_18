@@ -16,7 +16,7 @@ genre_schema = GenreSchema()
 
 
 @movie_ns.route('/')
-class MovieView(Resource):
+class MoviesView(Resource):
     def get(self):
         director_id = request.args.get('director_id')
         genre_id = request.args.get('genre_id')
@@ -33,9 +33,9 @@ class MovieView(Resource):
         """Получаем все фильмы по году"""
         if year:
             all_movies = movie_service.query(Movie).filter(Movie.year == year)
-        """Получаем все фильмы режиссера и жанра одновременно"""
-        if director_id and genre_id:
-            all_movies = movie_service.query(Movie).filter(Movie.genre_id == genre_id, Movie.director_id == director_id)
+        # """Получаем все фильмы режиссера и жанра одновременно"""
+        # if director_id and genre_id:
+        #     all_movies = movie_service.query(Movie).filter(Movie.genre_id == genre_id, Movie.director_id == director_id)
 
         return movie_schema.dump(all_movies), 200
 

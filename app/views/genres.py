@@ -8,7 +8,7 @@ genre_schema = GenreSchema()
 
 
 @genre_ns.route('/')
-class GenreView(Resource):
+class GenresView(Resource):
     """Вьюшка вывода всех жанров по ID"""
     def get(self):
         all_genres = genre_service.get_all()
