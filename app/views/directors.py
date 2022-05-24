@@ -10,10 +10,11 @@ director_schema = DirectorSchema()
 
 @director_ns.route('/')
 class DirectorsView(Resource):
-    """Вьюшка вывода всех режиссеров по ID"""
+    """Вьюшка вывода всех режиссеров"""
     def get(self):
         all_directors = director_service.get_all()
-        return director_schema.dump(all_directors), 200
+        result = DirectorSchema(many=True).dump(all_directors)
+        return result, 200
 
     def post(self):
         req_json = request.json
@@ -28,8 +29,9 @@ class DirectorView(Resource):
     """Вьюшка вывода одного режиссера по ID"""
     def get(self, did: int):
         try:
-            director = director_service.query(Director).filter(Director.id == did)
+            director = director_service.get_one(did)
             return director_schema.dump(director), 200
+        # Изменить на обработку конкретной ошибки
         except Exception as e:
             return str(e), 404
 
