@@ -36,4 +36,7 @@ class GenreView(Resource):
             return str(e), 404
 
     def put(self, gid):
-        pass
+        req_json = request.json
+        req_json["id"] = gid
+        genre_service.update(req_json)
+        return "", 204

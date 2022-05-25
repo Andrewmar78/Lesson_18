@@ -36,4 +36,7 @@ class DirectorView(Resource):
             return str(e), 404
 
     def put(self, did):
-        pass
+        req_json = request.json
+        req_json["id"] = did
+        movie_service.update(req_json)
+        return "", 204
