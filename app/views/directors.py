@@ -38,5 +38,9 @@ class DirectorView(Resource):
     def put(self, did):
         req_json = request.json
         req_json["id"] = did
-        movie_service.update(req_json)
+        director_service.update(req_json)
+        return "", 204
+
+    def delete(self, mid):
+        director_service.delete(mid)
         return "", 204

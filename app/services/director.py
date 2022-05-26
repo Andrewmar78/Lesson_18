@@ -21,6 +21,4 @@ class DirectorService:
         self.dao.update(data)
 
     def delete(self, did):
-        director = self.get_one(did)
-        self.session.delete(director)
-        self.session.commit()
+        self.dao.delete(did)

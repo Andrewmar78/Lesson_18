@@ -11,21 +11,8 @@ class MovieService:
     def get_one(self, mid):
         return self.dao.get_one(mid)
 
-    def get_one_by_all(self, filters: dict):
-        return self.dao.get_one_by_all(filters)
-
-    # def get_all_by_director(self):
-    #     all_movies = self.dao.get_all()
-    #     director_id = request.args.get('director_id')
-    #     if director_id:
-    #         all_movies = self.dao.query(Movie).filter(Movie.director_id == director_id)
-    #     return self.dao.get_all_by_director(mid)
-
-    # def get_all_by_genre(self, mid):
-    #     return self.dao.get_all_by_genre(mid)
-    #
-    # def get_all_by_year(self, mid):
-    #     return self.dao.get_all_by_year(mid)
+    def get_by_filters(self, filters: dict):
+        return self.dao.get_by_filters(filters)
 
     def create(self, data):
         return self.dao.create(data)
@@ -34,8 +21,13 @@ class MovieService:
         mid = data.get("id")
         movie = self.get_one(mid)
         movie.title = data.get("title")
-        # Остальные поля аналогично
-        self.dao.update(data)
+        movie.description = data.get("description")
+        movie.trailer = data.get("trailer")
+        movie.year = data.get("year")
+        movie.rating = data.get("rating")
+        movie.genre_id = data.get("genre_id")
+        movie.director_id = data.get("director.id")
+        self.dao.update(movie)
 
     def update_partial(self, data):
         mid = data.get("id")
@@ -44,12 +36,22 @@ class MovieService:
             movie.title = data.get("title")
         if "description" in data:
             movie.description = data.get("description")
-        # Остальное можно добавить аналогично
+        if "trailer" in data:
+            movie.trailer = data.get("trailer")
+        if "year" in data:
+            movie.year = data.get("year")
+        if "rating" in data:
+            movie.rating = data.get("rating")
+        if "genre_id" in data:
+            movie.genre_id = data.get("genre_id")
+        if "director_id" in data:
+            movie.director_id = data.get("director_id")
         self.dao.update(movie)
         # self.session.add(movie)
         # self.session.commit()
 
     def delete(self, mid):
-        movie = self.get_one(mid)
-        self.session.delete(movie)
-        self.session.commit()
+        self.dao.delete(mid)
+        # movie = self.get_one(mid)
+        # self.session.delete(movie)
+        # self.session.commit()

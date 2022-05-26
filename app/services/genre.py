@@ -18,9 +18,7 @@ class GenreService:
         gid = data.get("id")
         genre = self.get_one(gid)
         genre.name = data.get("name")
-        self.dao.update(data)
+        self.dao.update(genre)
 
     def delete(self, gid):
-        genre = self.get_one(gid)
-        self.session.delete(genre)
-        self.session.commit()
+        self.dao.delete(gid)

@@ -40,3 +40,7 @@ class GenreView(Resource):
         req_json["id"] = gid
         genre_service.update(req_json)
         return "", 204
+
+    def delete(self, mid):
+        genre_service.delete(mid)
+        return "", 204

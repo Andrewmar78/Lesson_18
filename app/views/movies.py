@@ -18,33 +18,17 @@ genre_schema = GenreSchema()
 @movie_ns.route('/')
 class MoviesView(Resource):
     def get(self):
-        # director_id = request.args.get('director_id')
-        # genre_id = request.args.get('genre_id')
-        # year = request.args.get('year')
-        filters = ['director_id', 'genre_id', 'year']
+        """Получаем все фильмы по режиссеру, жанру и/или году"""
+        director_id = request.args.get('director_id')
+        genre_id = request.args.get('genre_id')
+        year = request.args.get('year')
+        filters = {'director_id': director_id, 'genre_id': genre_id, 'year': year}
 
-        """Получаем все фильмы"""
-        all_movies = movie_service.get_all()
+        all_movies = movie_service.get_by_filters(filters)
         result = MovieSchema(many=True).dump(all_movies)
-        """Получаем все фильмы режиссера"""
-        # if director_id:
-            # all_movies = movie_service.query(Movie).filter(Movie.director_id == director_id)
-
-        # """Получаем все фильмы жанра"""
-        # if genre_id:
-        #     all_movies = movie_service.query(Movie).filter(Movie.genre_id == genre_id)
-        # """Получаем все фильмы по году"""
-        # if year:
-        #     all_movies = movie_service.query(Movie).filter(Movie.year == year)
-
-        if filters:
-            all_movies = movie_service.get_one_by_all(filters)
-        return movie_schema.dump(all_movies), 200
-
         return result, 200
 
     def post(self):
-
         req_json = request.json
         new_movie = Movie(**req_json)
         with movie_service.begin():
@@ -55,14 +39,13 @@ class MoviesView(Resource):
 @movie_ns.route('/<int:mid>')
 class MovieView(Resource):
     """Вьюшка вывода одного фильма по ID"""
-
     def get(self, mid: int):
-        try:
+        # try:
             # movie = movie_service.query(Movie).filter(Movie.id == mid)
             movie = movie_service.get_one(mid)
             return movie_schema.dump(movie), 200
-        except Exception as e:
-            return str(e), 404
+        # except Exception as e:
+        #     return str(e), 404
 
     def put(self, mid):
         req_json = request.json
